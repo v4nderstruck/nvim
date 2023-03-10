@@ -52,19 +52,9 @@ lvim.plugins = {
 -- ignore jdtls config
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "jdtls" })
 -- set a formatter, this will override the language server formatting capabilities (if it exists)
-local sources = require "null-ls"
-sources.setup {
-  sources = {
-    sources.builtins.formatting.google_java_format,
-  },  
-}
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
-  { 
-    
-    command = "google-java-format",
-    filetypes = { "java" } 
-  },
+  { command = "clang-format", filetypes = { "java" } },
 }
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
