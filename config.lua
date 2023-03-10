@@ -21,6 +21,7 @@ lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode["<leader>u"] = ":UndotreeToggle<cr>"
+lvim.keys.normal_mode["<leader>F"] = ":Telescope live_grep<cr>"
 
 lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
@@ -28,8 +29,9 @@ lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "jdtls" })
+
 lvim.plugins = {
-  "tpope/vim-sleuth",
   "mfussenegger/nvim-jdtls",
   {
     "zbirenbaum/copilot.lua",
@@ -49,8 +51,6 @@ lvim.plugins = {
   "dracula/vim",
   "mbbill/undotree",
 }
--- ignore jdtls config
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "jdtls" })
 -- set a formatter, this will override the language server formatting capabilities (if it exists)
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {

@@ -110,16 +110,16 @@ local config = {
       },
       configuration = {
         updateBuildConfiguration = "interactive",
-        runtimes = {
-          {
-            name = "JavaSE-11",
-            path = "~/.sdkman/candidates/java/11.0.2-open",
-          },
-          {
-            name = "JavaSE-18",
-            path = "~/.sdkman/candidates/java/18.0.1.1-open",
-          },
-        },
+        -- runtimes = {
+        --   {
+        --     name = "JavaSE-11",
+        --     path = "~/.sdkman/candidates/java/11.0.2-open",
+        --   },
+        --   {
+        --     name = "JavaSE-18",
+        --     path = "~/.sdkman/candidates/java/18.0.1.1-open",
+        --   },
+        -- },
       },
       maven = {
         downloadSources = true,
