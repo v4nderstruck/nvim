@@ -2,6 +2,7 @@
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.relativenumber = true
+vim.opt.colorcolumn = "80"
 
 -- general
 lvim.log.level = "info"
@@ -39,14 +40,21 @@ lvim.plugins = {
     event = "InsertEnter",
     config = function()
       require("copilot").setup({
+        panel = {
+          enabled = false,
+        },
         suggestion = {
-          auto_trigger = true,
-          keymap = {
-            accept = "<M-l>",
-          }
+          enabled = false,
         }
       })
     end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function()
+      require("copilot_cmp").setup()
+    end
   },
   "dracula/vim",
   "mbbill/undotree",
