@@ -3,6 +3,7 @@ vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.relativenumber = true
 vim.opt.colorcolumn = "80"
+vim.opt.updatetime = 50
 
 -- general
 lvim.log.level = "info"
@@ -14,7 +15,7 @@ lvim.format_on_save = {
 -- to disable icons and use a minimalist setup, uncomment the following
 -- lvim.use_icons = false
 
-lvim.colorscheme = "dracula"
+lvim.colorscheme = "catppuccin-frappe"
 lvim.format_on_save = false
 
 -- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
@@ -56,6 +57,13 @@ lvim.plugins = {
       require("copilot_cmp").setup()
     end
   },
+  { "catppuccin/nvim", name = "catppuccin" },
+  {
+    "windwp/nvim-ts-autotag",
+    config = function()
+      require("nvim-ts-autotag").setup()
+    end,
+  },
   "dracula/vim",
   "mbbill/undotree",
 }
@@ -64,5 +72,23 @@ local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { command = "clang-format", filetypes = { "java" } },
 }
+-- setup copilot
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+end
+local cmp = require "lvim.core.cmp"
+cmp.setup({
+  mapping = {
+    ["<Tab>"] = vim.schedule_wrap(function(fallback)
+      if cmp.visible() and has_words_before() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+      else
+        fallback()
+      end
+    end),
+  },
+})
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
